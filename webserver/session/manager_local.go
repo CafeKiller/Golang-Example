@@ -1,8 +1,14 @@
 package session
 
-const {
-	commandLoadStore = 1	// 读取数据
-}
+import "github.com/labstack/echo"
+
+var e *echo.Echo
+
+const (
+	commandCreate    commandType = iota // 创建会话
+	commandLoadStore                    // 读取会话数据
+	commandSavaStore                    // 保存数据
+)
 
 // 命令类型指定
 type commandType int
