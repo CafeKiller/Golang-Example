@@ -1,4 +1,4 @@
-package main
+package model
 
 import (
 	"errors"
@@ -32,8 +32,16 @@ const (
 	commandFindByUserID
 )
 
+// 搜索时选项
+const (
+	FIndAll    FindOption = iota // 全件検索
+	FindFirst                    // 1件目のみ返す
+	FindUnique                   // 結果が1件のみでない場合にはエラーを返す
+)
+
 var e *echo.Echo
 
+// DataAccessor返回的异常选项
 var (
 	ErrorNotFound        = errors.New("Not found")
 	ErrorMultipleResults = errors.New("Multiple results")

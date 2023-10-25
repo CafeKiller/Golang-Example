@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Echo-Example/webserver/model"
 	"Echo-Example/webserver/session"
 	"fmt"
 	"github.com/labstack/echo"
@@ -11,8 +12,9 @@ import (
 
 var templates map[string]*template.Template
 
-// var userDA *model.UserDataAccessor
 var sessionManager *session.Manager
+
+var userDA *model.UserDataAccessor
 
 func main() {
 	// 创建echo对象

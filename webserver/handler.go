@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Echo-Example/webserver/model"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -25,4 +26,10 @@ func handleUsers(content echo.Context) error {
 		mes := "未登录 / Not logged in / ログインしていません。"
 		return content.Render(http.StatusOK, "error", mes)
 	}
+	users, err := userDA.FindByUserID(content.Param("user_id"), model.FindFirst)
+	if err != nil {
+		return content.Render(http.StatusOK, "error", err)
+	}
+	user := users[0]
+	return content.Render(http.StatusOK, "user", user)
 }
