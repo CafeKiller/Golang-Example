@@ -9,6 +9,8 @@ import (
 // setRoute 设置路由处理程序
 func setRoute(echo *echo.Echo) {
 	echo.GET("/", handleIndexGet)
+	echo.GET("/users/:user_id", handleUsers)
+	echo.POST("/users/:user_id", handleUsers)
 }
 
 // GET :/
@@ -33,3 +35,5 @@ func handleUsers(content echo.Context) error {
 	user := users[0]
 	return content.Render(http.StatusOK, "user", user)
 }
+
+// GET:/login
