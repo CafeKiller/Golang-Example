@@ -21,6 +21,11 @@ func UserLogin(content echo.Context, userID string, password string) error {
 		return err
 	}
 	user := &users[0]
+	encodePassword := model.EncodeStringMD5(password)
+	if user.Password != encodePassword {
+		return ErrorInvalidPassword
+	}
+	sessionID, err := sessionManager
 
 	return nil
 

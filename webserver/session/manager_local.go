@@ -5,9 +5,11 @@ import "github.com/labstack/echo"
 var e *echo.Echo
 
 const (
-	commandCreate    commandType = iota // 创建会话
-	commandLoadStore                    // 读取会话数据
-	commandSavaStore                    // 保存数据
+	commandCreate        commandType = iota // 创建会话
+	commandLoadStore                        // 读取会话数据
+	commandSavaStore                        // 保存数据
+	commandDelete                           // 删除数据
+	commandDeleteExpired                    // 数据有效时间
 )
 
 // 命令类型指定

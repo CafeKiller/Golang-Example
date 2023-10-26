@@ -90,6 +90,17 @@ func (u *User) Copy(f *User) {
 	copy(u.Roles, f.Roles)
 }
 
+// Start 开启Accessor
+func (a *UserDataAccessor) Start(echo *echo.Echo) error {
+	e = echo
+	users = make(map[ID]User)
+	if err := a.decodeJSON(); err != nil {
+		return err
+	}
+	go a.mainLoop()
+	return nil
+}
+
 // Stop 关闭Accessor对象
 func (a *UserDataAccessor) Stop() {
 	a.stopCh <- struct{}{}
