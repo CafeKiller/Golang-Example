@@ -81,6 +81,11 @@ type User struct {
 	Roles    []Role    `json:"roles"`
 }
 
+const (
+	RoleAdmin Role = "admin"
+	RoleUser  Role = "user"
+)
+
 func (u *User) Copy(f *User) {
 	u.ID = f.ID
 	u.UserID = f.UserID
