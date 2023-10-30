@@ -7,7 +7,7 @@ import (
 )
 
 // Template HTML渲染模版
-type Template struct {
+type Template struct { // [review] 此处为一个接口(Renderer接口)的实现
 }
 
 // Render 将数据写入writer, 并嵌入HTML模块
@@ -16,17 +16,21 @@ func (t *Template) Render(writer io.Writer, name string, data interface{}, conte
 	if t, ok := templates[name]; ok {
 		return t.ExecuteTemplate(writer, "layout.html", data)
 	}
-
 	content.Echo().Logger.Debugf("Template[%s] Not Found", name)
-
 	return templates["error"].ExecuteTemplate(writer, "layout.html", "Internal Server Error")
 }
 
 // loadTemplates 读取HTML模版
 func loadTemplates() {
 	var baseTemplate = "webserver/templates/layout.html"
+
+	// 将所有html模版逐个放入 全局对象: templates 集合当中
 	templates = make(map[string]*template.Template)
-	// 将所有html模版放入templates集合中
+	/*
+		template.ParseFiles 表示通过文件的方式解析模版
+		template.ParseFiles 可以传入多个string参数,
+		其返回的模版是第一个传入模版, 后续模版则是用于解析, 解析后的结果传递到第一个模版
+	*/
 	templates["index"] = template.Must(
 		template.ParseFiles(baseTemplate, "webserver/templates/index.html"))
 	templates["error"] = template.Must(

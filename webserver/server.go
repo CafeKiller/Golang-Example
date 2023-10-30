@@ -15,8 +15,10 @@ import (
 	"time"
 )
 
+// 声明一个全局模版对象
 var templates map[string]*template.Template
 
+// 全局session管理器
 var sessionManager *session.Manager
 
 var userDA *model.UserDataAccessor
@@ -34,7 +36,9 @@ func main() {
 	echo.Renderer = t
 
 	// 设置中间件
+	// 中间件 用于记录每一个HTTP请求信息
 	echo.Use(middleware.Logger())
+	// 中间件 用于从panic错误链中恢复程序,打印错误信息,并将错误集中到 HTTPErrorHandler 处理
 	echo.Use(middleware.Recover())
 
 	// 设置静态文件路径

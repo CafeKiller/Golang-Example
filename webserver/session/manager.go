@@ -38,8 +38,10 @@ func (m *Manager) Start(echo *echo.Echo) {
 
 // Stop 停止Manager
 func (m *Manager) Stop() {
+	// 创建一个空对象, 并使用通道将值传递个stopGCCh
 	m.stopGCCh <- struct{}{}
 	time.Sleep(100 * time.Millisecond)
+	// 创建一个空对象, 并使用通道将值传递到stopCh
 	m.stopCh <- struct{}{}
 }
 
