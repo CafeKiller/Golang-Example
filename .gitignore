@@ -21,6 +21,7 @@ debug
 .vscode/
 !.gitkeep
 
-*/*/pkg/*
-*/pkg/*
 pkg/*
+*/pkg/*
+*/*/pkg/*
+*/*/*/pkg/*

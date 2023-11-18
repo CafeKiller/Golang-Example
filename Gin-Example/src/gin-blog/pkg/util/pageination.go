@@ -2,8 +2,8 @@ package util
 
 import (
 	"Gin-Example/src/gin-blog/pkg/setting"
-	"github.com/Unknwon/com"
 	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
 )
 
 // GetPage 获取分页页码
