@@ -1,10 +1,13 @@
 package models
 
 import (
-	"Gin-Example/src/gin-blog/pkg/setting"
 	"fmt"
-	"github.com/jinzhu/gorm"
 	"log"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
+
+	"Gin-Example/src/gin-blog/pkg/setting"
 )
 
 var db *gorm.DB
