@@ -25,3 +25,10 @@ pkg/*
 */pkg/*
 */*/pkg/*
 */*/*/pkg/*
+
+conf/*
+*/*/conf/*
+*/*/*/conf/*
+
+/Gin-Example/conf/
+/Gin-Example/conf/*

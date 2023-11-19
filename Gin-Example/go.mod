@@ -12,9 +12,13 @@ require (
 )
 
 require (
+	github.com/Unknwon/com v0.0.0-00010101000000-000000000000 // indirect
+	github.com/Unknwon/goconfig v1.0.0 // indirect
 	github.com/astaxie/beego v1.12.3 // indirect
+	github.com/aybabtme/color v0.0.0-20140713052517-28ad4cc941d6 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/codegangsta/cli v1.20.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -22,6 +26,7 @@ require (
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/gpmgo/gopm v0.6.5 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
