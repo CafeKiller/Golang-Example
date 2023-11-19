@@ -1,13 +1,17 @@
 package v1
 
 import (
+	"github.com/astaxie/beego/logs"
+	"net/http"
+
+	"github.com/astaxie/beego/validation"
+	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
+
 	"Gin-Example/src/gin-blog/models"
 	"Gin-Example/src/gin-blog/pkg/err"
 	"Gin-Example/src/gin-blog/pkg/setting"
 	"Gin-Example/src/gin-blog/pkg/util"
-	"github.com/gin-gonic/gin"
-	"github.com/unknwon/com"
-	"net/http"
 )
 
 // GetTags 获取多个文章标签
@@ -42,6 +46,37 @@ func GetTags(cont *gin.Context) {
 
 // AddTag 添加一个文章标签
 func AddTag(cont *gin.Context) {
+	name := cont.Query("name")
+	state := com.StrTo(cont.DefaultQuery("state", "0")).MustInt()
+	createdBy := cont.Query("created_by")
+
+	valid := validation.Validation{}
+	valid.Required(name, "name").Message("名称不能为空")
+	valid.MaxSize(name, 100, "name").Message("名称最长为100字符")
+	valid.Required(createdBy, "created_by").Message("创建人不能为空")
+	valid.MaxSize(createdBy, 100, "created_by").Message("创建人最长为100字符")
+	valid.Range(state, 0, 1, "state").Message("状态只允许为0/1")
+
+	code := err.INVALID_PARAMS
+
+	if !valid.HasErrors() {
+		if !models.ExistTagByName(name) {
+			code = err.SUCCESS
+			models.AddTag(name, state, createdBy)
+		} else {
+			code = err.ERROR_EXIST_TAG
+		}
+	} else {
+		for _, err := range valid.Errors {
+			logs.Info(err.Key, err.Message)
+		}
+	}
+
+	cont.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  err.GetMsg(code),
+		"data": make(map[string]string),
+	})
 
 }
 
