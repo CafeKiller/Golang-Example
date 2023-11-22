@@ -132,6 +132,61 @@ func AddArticle(cont *gin.Context) {
 
 // UpdateArticle 修改文章
 func UpdateArticle(cont *gin.Context) {
+	valid := validation.Validation{}
+
+	id := com.StrTo(cont.Param("id")).MustInt()
+	tagId := com.StrTo(cont.Query("tag_id")).MustInt()
+	title := cont.Query("title")
+	desc := cont.Query("desc")
+	content := cont.Query("content")
+	modifiedBy := cont.Query("modified_by")
+
+	var state int = -1
+	if arg := cont.Query("state"); arg != "" {
+		state = com.StrTo(arg).MustInt()
+		valid.Range(state, 0, 1, "state")
+	}
+
+	valid.Min(id, 1, "id").Message("ID必须大于0")
+	valid.MaxSize(title, 128, "title").Message("标题最长为128个字符")
+	valid.MaxSize(desc, 255, "desc").Message("简述最多为255个字符")
+	valid.MaxSize(content, 65535, "content").Message("内容最长为65535")
+	valid.Required(modifiedBy, "modified_by").Message("修改人不能为空")
+	valid.MaxSize(modifiedBy, 128, "modified_bt").Message("修改人最长为128字符")
+
+	code := err.INVALID_PARAMS
+	if !valid.HasErrors() {
+		if models.ExistArticleByID(id) {
+			data := make(map[string]interface{})
+			if tagId > 0 {
+				data["tag_id"] = tagId
+			}
+			if title != "" {
+				data["title"] = title
+			}
+			if desc != "" {
+				data["desc"] = desc
+			}
+			if content != "" {
+				data["content"] = content
+			}
+			data["modified_by"] = modifiedBy
+			models.EditArticle(id, data)
+			code = err.SUCCESS
+		} else {
+			code = err.ERROR_NOT_EXIST_TAG
+		}
+	} else {
+		for _, err := range valid.Errors {
+			logs.Info(err.Key, err.Message)
+		}
+	}
+
+	cont.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  err.GetMsg(code),
+		"data": make(map[string]string),
+	})
 
 }
 
