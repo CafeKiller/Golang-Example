@@ -2,6 +2,7 @@ package routers
 
 import (
 	"Gin-Example/src/gin-blog/pkg/setting"
+	"Gin-Example/src/gin-blog/routers/api"
 	v1 "Gin-Example/src/gin-blog/routers/api/v1"
 	"github.com/gin-gonic/gin"
 )
@@ -22,6 +23,8 @@ func InitRouter() *gin.Engine {
 			"message": "Hello GO! Hello Gin! Hi CoffeeKiller",
 		})
 	})
+
+	r.GET("/auth", api.GetAuth)
 
 	apiV1 := r.Group("/api/v1")
 	{
