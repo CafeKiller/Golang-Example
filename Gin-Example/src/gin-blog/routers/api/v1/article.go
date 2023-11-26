@@ -3,6 +3,7 @@ package v1
 import (
 	"Gin-Example/src/gin-blog/models"
 	"Gin-Example/src/gin-blog/pkg/err"
+	"Gin-Example/src/gin-blog/pkg/logging"
 	"Gin-Example/src/gin-blog/pkg/setting"
 	"Gin-Example/src/gin-blog/pkg/util"
 	"github.com/astaxie/beego/logs"
@@ -31,6 +32,7 @@ func GetArticle(cont *gin.Context) {
 	} else {
 		for _, err := range valid.Errors {
 			logs.Info(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -73,6 +75,7 @@ func GetArticles(cont *gin.Context) {
 	} else {
 		for _, err := range valid.Errors {
 			logs.Info(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -119,7 +122,7 @@ func AddArticle(cont *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logs.Info(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -178,7 +181,7 @@ func UpdateArticle(cont *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logs.Info(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -207,7 +210,7 @@ func DeleteArticle(cont *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logs.Info(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
