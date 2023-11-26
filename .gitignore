@@ -23,8 +23,8 @@ debug
 
 pkg/*
 */pkg/*
-*/*/pkg/*
-*/*/*/pkg/*
+*/*/*/pkg/sumdb
+*/*/*/pkg/mod
 
 conf/*
 */*/conf/*
