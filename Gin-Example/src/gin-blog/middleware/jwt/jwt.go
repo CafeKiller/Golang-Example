@@ -1,4 +1,4 @@
-package middleware
+package jwt
 
 import (
 	"Gin-Example/src/gin-blog/pkg/err"
