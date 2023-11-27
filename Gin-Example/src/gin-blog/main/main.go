@@ -3,13 +3,16 @@ package main
 import (
 	"Gin-Example/src/gin-blog/pkg/setting"
 	"Gin-Example/src/gin-blog/routers"
+	"context"
 	"fmt"
-
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -24,8 +27,25 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	server.ListenAndServe()
+	go func() {
+		if err := server.ListenAndServe(); err != nil {
+			log.Printf("Listen: %s \n", err)
+		}
+	}()
 
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+
+	log.Println("Shutdown Server ......")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := server.Shutdown(ctx); err != nil {
+		log.Fatal("Server Shutdown:", err)
+	}
+
+	log.Println("Server exiting")
 }
 
 func GetAppPath() string {
