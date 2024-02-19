@@ -6,15 +6,16 @@ import (
 	"net/http"
 )
 
-// setRoute 设置路由处理程序
+// setRoute 传入 echo 对象, 并为其绑定对应路由处理程序
 func setRoute(echo *echo.Echo) {
+
 	echo.GET("/", handleIndexGet)
 	echo.GET("/login", handleLoginGet)
 	echo.POST("/login", handleLoginPost)
 	echo.GET("/users/:user_id", handleUsers)
 	echo.POST("/users/:user_id", handleUsers)
 
-	// 管理员专属访问页面
+	// 创建分组 Group, 设置为管理员专属访问页面
 	admin := echo.Group("/admin", MiddlewareAuthAdmin)
 	admin.GET("", handleAdmin)
 	admin.POST("", handleAdmin)
@@ -22,14 +23,18 @@ func setRoute(echo *echo.Echo) {
 }
 
 // GET :/
+// handleIndexGet 用于处理主页 index 的
 func handleIndexGet(content echo.Context) error {
 	return content.Render(http.StatusOK, "index", "world")
 }
 
 // GET :/users/:user_id
 // POST :/users/:user_id
+// handleUsers 用于处理用户页 users 的数据
 func handleUsers(content echo.Context) error {
+	// 获取参数 user_id
 	userID := content.Param("user_id")
+	// 校验 user_id 的合法性
 	err := CheckUserID(content, userID)
 	if err != nil {
 		content.Echo().Logger.Debugf("User page[%s] Role Error. [%s]", userID, err)
@@ -46,12 +51,15 @@ func handleUsers(content echo.Context) error {
 
 // GET:/admin
 // POST:/admin
+// handleAdmin 用于处理管理员主页 admin 的数据
 func handleAdmin(content echo.Context) error {
 	return content.Render(http.StatusOK, "admin", nil)
 }
 
 // GET:/admin/users
+// handleAdminUsersGet 用于处理管理端用户页 admin/users 的数据
 func handleAdminUsersGet(content echo.Context) error {
+	// 查询所有用户的数据
 	users, err := userDA.FindAll()
 	if err != nil {
 		return err
@@ -60,6 +68,7 @@ func handleAdminUsersGet(content echo.Context) error {
 }
 
 // GET:/login
+// handleLoginGet 用于处理登录页 login 的数据
 func handleLoginGet(content echo.Context) error {
 	return content.Render(http.StatusOK, "login", nil)
 }

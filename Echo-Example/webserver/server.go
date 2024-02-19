@@ -15,30 +15,31 @@ import (
 	"time"
 )
 
-// 声明一个全局模版对象
+// 声明一个全局模版集合 ( map 集合, 一种无序键值对集合)
 var templates map[string]*template.Template
 
-// 全局session管理器
+// 创建全局 session 管理器
 var sessionManager *session.Manager
 
 var userDA *model.UserDataAccessor
 
 func main() {
-	// 创建echo对象
+	// 创建 echo 对象
 	echo := echo.New()
 
-	// 设置日志的输入级别
+	// 设置 echo 的内置日志管理器的输入级别
 	// e.Logger.SetLevel(log.INFO)
 	echo.Logger.SetLevel(log.DEBUG)
 
-	// 使用echo内置的模版渲染
+	// 实例化全局模版集合
 	t := &Template{}
+	// 将模版实例绑定至 echo 的 Renderer 接口上, echo 会自行调用渲染
 	echo.Renderer = t
 
 	// 设置中间件
-	// 中间件 用于记录每一个HTTP请求信息
+	// Logger 中间件记录有关每个 HTTP 请求的信息。
 	echo.Use(middleware.Logger())
-	// 中间件 用于从panic错误链中恢复程序,打印错误信息,并将错误集中到 HTTPErrorHandler 处理
+	// Recover 中间件从 panic 链中的任意位置恢复程序， 打印堆栈的错误信息，并将错误集中交给 HTTPErrorHandler 处理。
 	echo.Use(middleware.Recover())
 
 	// 设置静态文件路径

@@ -6,13 +6,14 @@ import (
 	"io"
 )
 
-// Template HTML渲染模版
+// Template HTML 渲染模版对象
 type Template struct { // [review] 此处为一个接口(Renderer接口)的实现
 }
 
-// Render 将数据写入writer, 并嵌入HTML模块
+// Render Template 对象的接口, 将数据写入 writer, 并嵌入HTML模块
 func (t *Template) Render(writer io.Writer, name string, data interface{}, content echo.Context) error {
 
+	// 通过 name 读取全局模版集合中指定模版
 	if t, ok := templates[name]; ok {
 		return t.ExecuteTemplate(writer, "layout.html", data)
 	}
@@ -22,6 +23,7 @@ func (t *Template) Render(writer io.Writer, name string, data interface{}, conte
 
 // loadTemplates 读取HTML模版
 func loadTemplates() {
+	// 基础模版
 	var baseTemplate = "webserver/templates/layout.html"
 
 	// 将所有html模版逐个放入 全局对象: templates 集合当中
