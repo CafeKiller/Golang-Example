@@ -75,6 +75,7 @@ func handleLoginGet(content echo.Context) error {
 
 // POST:/login
 func handleLoginPost(content echo.Context) error {
+	// FormValue 获取 form 表单数据
 	userID := content.FormValue("userid")
 	password := content.FormValue("password")
 	err := UserLogin(content, userID, password)
@@ -99,6 +100,7 @@ func handleLoginPost(content echo.Context) error {
 }
 
 // POST:/logout
+// handleLogoutPost 处理退出
 func handleLogoutPost(content echo.Context) error {
 	err := UserLogout(content)
 	if err != nil {

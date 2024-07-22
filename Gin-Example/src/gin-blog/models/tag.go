@@ -78,6 +78,5 @@ func (tag *Tag) BeforeCreate(scope *gorm.Scope) error {
 // BeforeUpdate 为Gorm提供回调函数, 此处为更新前
 func (tag *Tag) BeforeUpdate(scope *gorm.Scope) error {
 	scope.SetColumn("ModifiedOn", time.Now().Unix())
-
 	return nil
 }

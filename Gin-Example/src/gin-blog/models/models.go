@@ -18,6 +18,7 @@ type Model struct {
 	ModifiedOn int `json:"modified_on"`
 }
 
+// init 初始化数据库
 func init() {
 	var (
 		err                                               error
@@ -60,6 +61,7 @@ func init() {
 
 }
 
+// closeDB 关闭数据库
 func closeDB() {
 	defer db.Close()
 }
